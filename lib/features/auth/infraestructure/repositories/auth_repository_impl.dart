@@ -1,12 +1,13 @@
 import 'package:teslo_shop/features/auth/domain/domain.dart';
+import 'package:teslo_shop/features/auth/infraestructure/infraestructure.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
-  final AuthDataSource datasource;
+  final AuthDatasource datasource;
 
-  AuthRepositoryImpl({required this.datasource});
+  // AuthRepositoryImpl(this.datasource);
 
-  // AuthRepositoryImpl(AuthDataSource? dataSource)
-  //     : datasource = datasource ?? AuthDatasourceImpl();
+  AuthRepositoryImpl({AuthDatasource? dataSource})
+      : datasource = dataSource ?? AuthDatasourceImpl();
 
   @override
   Future<User> checkAuthStatus(String token) {
