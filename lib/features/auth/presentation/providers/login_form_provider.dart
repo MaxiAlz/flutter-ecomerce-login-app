@@ -1,15 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
+import 'package:teslo_shop/features/auth/presentation/providers/auth_provider.dart';
 import 'package:teslo_shop/features/shared/infraestructure/inputs/inputs.dart';
 
 // 3 - StatenofierProvider - consume aufuera
 
 final loginFormProvider =
     StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
-  return LoginFormNotifier();
+
+  final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
+
+  return LoginFormNotifier(loginUserCallback: loginUserCallback);
 });
-
-
 
 // 1 - Estate de este provider
 class LoginFormState {
@@ -55,32 +57,39 @@ class LoginFormState {
 }
 
 // 2 Como implementar un notifier
-
 class LoginFormNotifier extends StateNotifier<LoginFormState> {
-  LoginFormNotifier() : super(LoginFormState());
+
+  final Function(String, String) loginUserCallback;
+
+  LoginFormNotifier({required this.loginUserCallback})
+      : super(LoginFormState());
 
   onEmailChange(String value) {
     final newEmail = Email.dirty(value);
+    print('email => $value');
     state = state.copyWith(
-        email: newEmail, isValid: Formz.validate([newEmail, state.password]));
+        email: newEmail, isValid: Formz.validate([newEmail, state.email]));
   }
 
   onPasswordChange(String value) {
     final newPassword = Password.dirty(value);
-    state = state.copyWith(isValid: Formz.validate([newPassword, state.email]));
+    // print('contraseña => $newPassword');bc
+    state = state.copyWith(
+        password: newPassword,
+        isValid: Formz.validate([newPassword, state.password]));
   }
 
-  onFormSubmit() {
+  onFormSubmit() async {
     _touchEveryField();
-    if (state.isValid) return;
+    if (!state.isValid) return;
 
-    print(state);
+    await loginUserCallback(state.email.value, state.password.value);
   }
 
   _touchEveryField() {
     final email = Email.dirty(state.email.value);
     final password = Password.dirty(state.password.value);
-
+   
     state = state.copyWith(
         isFormPosted: true,
         email: email,
@@ -88,4 +97,3 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
         isValid: Formz.validate([email, password]));
   }
 }
-
