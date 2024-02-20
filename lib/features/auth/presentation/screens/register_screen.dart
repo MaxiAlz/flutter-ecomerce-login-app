@@ -66,60 +66,60 @@ class _RegisterForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyles = Theme.of(context).textTheme;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            Text('Nueva cuenta', style: textStyles.titleMedium),
-            const SizedBox(height: 50),
-            const CustomTextFormField(
-              label: 'Nombre completo',
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 30),
-            const CustomTextFormField(
-              label: 'Correo',
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 30),
-            const CustomTextFormField(
-              label: 'Contraseña',
-              obscureText: true,
-            ),
-            const SizedBox(height: 30),
-            const CustomTextFormField(
-              label: 'Repita la contraseña',
-              obscureText: true,
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: CustomFilledButton(
-                  text: 'Crear',
-                  buttonColor: Colors.black,
-                  onPressed: () {},
-                )),
-            const Spacer(flex: 2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('¿Ya tienes cuenta?'),
-                TextButton(
-                    onPressed: () {
-                      if (context.canPop()) {
-                        return context.pop();
-                      }
-                      context.go('/login');
-                    },
-                    child: const Text('Ingresa aquí'))
-              ],
-            ),
-            const Spacer(flex: 1),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Column(
+        children: [
+          // const SizedBox(height: 50),
+          const Spacer(),
+          Text('Nueva cuenta', style: textStyles.titleMedium),
+          // const SizedBox(height: 50),
+          const Spacer(),
+          const CustomTextFormField(
+            label: 'Nombre completo',
+            keyboardType: TextInputType.emailAddress,
+          ),
+          const SizedBox(height: 30),
+          const CustomTextFormField(
+            label: 'Correo',
+            keyboardType: TextInputType.emailAddress,
+          ),
+          const SizedBox(height: 30),
+          const CustomTextFormField(
+            label: 'Contraseña',
+            obscureText: true,
+          ),
+          const SizedBox(height: 30),
+          const CustomTextFormField(
+            label: 'Repita la contraseña',
+            obscureText: true,
+          ),
+          const SizedBox(height: 30),
+          SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: CustomFilledButton(
+                text: 'Crear',
+                buttonColor: Colors.black,
+                onPressed: () {},
+              )),
+          const Spacer(flex: 2),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('¿Ya tienes cuenta?'),
+              TextButton(
+                  onPressed: () {
+                    if (context.canPop()) {
+                      return context.pop();
+                    }
+                    context.go('/login');
+                  },
+                  child: const Text('Ingresa aquí'))
+            ],
+          ),
+          const Spacer(flex: 1),
+        ],
       ),
     );
   }
