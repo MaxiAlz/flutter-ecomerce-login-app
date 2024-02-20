@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teslo_shop/features/auth/domain/domain.dart';
 import 'package:teslo_shop/features/auth/infraestructure/infraestructure.dart';
@@ -23,10 +25,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     try {
       final user = await authRepository.login(email, password);
-      print('usuario ===>>> $user');
       _setLoggedUser(user);
-    } on WrongCredentials {
-      logoutUser('Credenciales incorrectas');
+    } on CustomError catch (e) {
+      logoutUser(e.message);
     } catch (e) {
       logoutUser('Error no controlado');
     }
